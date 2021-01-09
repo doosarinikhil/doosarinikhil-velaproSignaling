@@ -44,10 +44,7 @@ function listen(server: any) {
         });
     }
     var io = socket.listen(server, {
-        origins: [
-            'http://localhost:4200',
-            'https://entermeme.com',
-          ],
+        origins: '*:*',
         pingInterval: 4000,
         pingTimeout: 9000,
     });
