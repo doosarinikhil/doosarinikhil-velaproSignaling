@@ -45,6 +45,7 @@ function listen(server: any) {
     }
     var io = socket.listen(server, {
         origins: '*:*',
+        transports: ["polling","websocket"],
         pingInterval: 4000,
         pingTimeout: 9000,
     });
