@@ -50,15 +50,15 @@ function listen(server: any) {
     });
     io.sockets.setMaxListeners(0);
     process.setMaxListeners(0);
-    io.use((socket: socket.Socket, next) => {
-        // let handshake = socket.handshake;
-        // if (handshake.query && handshake.query.accessToken && handshake.query.accessToken != undefined) {
-        //     next();
-        // } else {
-        //     next(new Error('please send accessToken'));
-        // }
-        next();
-    });
+    // io.use((socket: socket.Socket, next) => {
+    //     let handshake = socket.handshake;
+    //     if (handshake.query && handshake.query.accessToken && handshake.query.accessToken != undefined) {
+    //         next();
+    //     } else {
+    //         next(new Error('please send accessToken'));
+    //     }
+    //     next();
+    // });
     io.on('connection', (socket: any) => {
         socket.userId = socket.handshake.query.accessToken;
         if (socketUsers[socket.userId]) {
