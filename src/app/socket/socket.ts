@@ -53,7 +53,6 @@ function listen(server: any) {
     process.setMaxListeners(0);
     io.use((socket: socket.Socket, next) => {
         let handshake = socket.handshake;
-        console.log("test",handshake);
         if (handshake.query && handshake.query.accessToken && handshake.query.accessToken != undefined) {
             next();
         } else {
@@ -62,7 +61,6 @@ function listen(server: any) {
         next();
     });
     io.on('connection', (socket: any) => {
-        console.log("on conn : ",socket.handshake.query)
         socket.userId = socket.handshake.query.accessToken;
         if (socketUsers[socket.userId]) {
             socketUsers[socket.userId].push({ socketId: socket.id })
@@ -161,6 +159,7 @@ function listen(server: any) {
             socket.call = { roomId: data.roomId }
             startSession(data.roomId, data.participants)
             getSession(data.roomId).joinedParticipants.push({ id: data.from.id, socketId: socket.id })
+            console.log("init",getSession(data.roomId))
         })
         socket.on('addParticipants', (data: any) => {
             data.eventType = 'addParticipants';
