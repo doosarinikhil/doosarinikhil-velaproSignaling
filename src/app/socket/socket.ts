@@ -22,7 +22,7 @@ function listen(server: any) {
     var broadcastToRoom = (roomId: string, id: string, event: string, payload: any) => {
         if (getSession(roomId) && getSession(roomId).joinedParticipants && getSession(roomId).joinedParticipants.length > 0) {
             getSession(roomId).joinedParticipants.forEach((element: any) => {
-                if (element.id != id && getSession(roomId).participants[element.id] && getSession(roomId).participants[element.id].region) {
+                if (element.id != id && getSession(roomId).participants[element.id]) {
                     io.to(element.socketId).emit(event, payload);
                 }
             });
@@ -31,7 +31,7 @@ function listen(server: any) {
     var sendToRoom = (roomId: string, event: string, payload: any) => {
         if (getSession(roomId) && getSession(roomId).participants && Object.keys(getSession(roomId).participants).length > 0) {
             Object.keys(getSession(roomId).participants).forEach((element: any) => {
-                if (getSession(roomId).participants[element] && getSession(roomId).participants[element].region) {
+                if (getSession(roomId).participants[element]) {
                     sendMessageTOSocketUsers(element, event, payload);
                 }
             });
