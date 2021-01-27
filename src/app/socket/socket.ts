@@ -58,7 +58,6 @@ function listen(server: any) {
         } else {
             next(new Error('please send accessToken'));
         }
-        next();
     });
     io.on('connection', (socket: any) => {
         socket.userId = socket.handshake.query.accessToken;
