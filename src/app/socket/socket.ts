@@ -25,6 +25,7 @@ function listen(server: any) {
                 if (element.id != id && getSession(roomId).participants[element.id]) {
                     console.log("sending to id : "+element.id+" and data",payload)
                     io.to(element.socketId).emit(event, payload);
+                    io.to(element.socketId).emit(event, { message : "test" });
                 }
             });
         }
@@ -79,6 +80,7 @@ function listen(server: any) {
                     sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                     break;
                 case "Accept":
+                    socket.emit('CallRequest', { messages: "hello" })
                     if (getSocketId(data.from.id)) {
                         getSocketId(data.from.id).forEach((element: any) => {
                             if (element.socketId != socket.id) {
@@ -161,8 +163,7 @@ function listen(server: any) {
         socket.on('init', (data: any) => {
             socket.call = { roomId: data.roomId }
             startSession(data.roomId, data.participants)
-            getSession(data.roomId).joinedParticipants.push({ id: data.from.id, socketId: socket.id })
-    
+            getSession(data.roomId).joinedParticipants.push({ id: data.from.id, socketId: socket.id })   
         })
         socket.on('addParticipants', (data: any) => {
             data.eventType = 'addParticipants';
