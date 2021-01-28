@@ -24,7 +24,6 @@ function listen(server: any) {
             getSession(roomId).joinedParticipants.forEach((element: any) => {
                 if (element.id != id && getSession(roomId).participants[element.id]) {
                     io.to(element.socketId).emit(event, payload);
-
                 }
             });
         }
