@@ -23,9 +23,8 @@ function listen(server: any) {
         if (getSession(roomId) && getSession(roomId).joinedParticipants && getSession(roomId).joinedParticipants.length > 0) {
             getSession(roomId).joinedParticipants.forEach((element: any) => {
                 if (element.id != id && getSession(roomId).participants[element.id]) {
-                    console.log("sending to id : "+element.id+" and data",payload)
                     io.to(element.socketId).emit(event, payload);
-                    io.to(element.socketId).emit(event, { message : "test" });
+
                 }
             });
         }
@@ -88,9 +87,7 @@ function listen(server: any) {
                             }
                         });
                     }
-                    console.log("came here")
                     if (getSession(data.roomId) && getSession(data.roomId).joinedParticipants) {
-                        console.log("inside")
                         getSession(data.roomId).joinedParticipants.push({ id: data.from.id, socketId: socket.id })
                         if (!getSession(data.roomId).participants[data.from.id]) {
                             getSession(data.roomId).participants[data.from.id] = data.details;
@@ -106,7 +103,6 @@ function listen(server: any) {
                         }
                         broadcastToRoom(data.roomId, data.from.id, 'CallRequest', data);
                         socket.emit('CallRequest', { type: 'participants', status: true, participants: getSession(data.roomId).participants, roomId: data.roomId })
-                        console.log("aprticipant event", { type: 'participants', status: true, participants: getSession(data.roomId).participants, roomId: data.roomId } )
                     } else {
                         socket.emit('CallRequest', { type: 'participants', status: false, roomId: data.roomId })
                     }
