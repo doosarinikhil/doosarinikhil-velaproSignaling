@@ -83,7 +83,7 @@ class App {
 
 	public listen() {
 		this.server.listen(this.port, () => {
-			console.log(`Server listening on the port ${this.port}`);
+			console.log(`Signaling server listening on the port ${this.port}`);
 		});
 	}
 }
