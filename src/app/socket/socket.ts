@@ -79,7 +79,6 @@ function listen(server: any) {
                     sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                     break;
                 case "Accept":
-                    socket.emit('CallRequest', { messages: "hello" })
                     if (getSocketId(data.from.id)) {
                         getSocketId(data.from.id).forEach((element: any) => {
                             if (element.socketId != socket.id) {
@@ -177,6 +176,7 @@ function listen(server: any) {
         // Peer to peer calling events 
         socket.on('P2P', (data: any) => {
             data.eventType = 'P2P';
+            console.log('P2P : ',data);
             broadcastToRoom(data.roomId, data.from.id, 'P2P', data);
         });
         socket.on('messages', (data: any, callback: any) => {
