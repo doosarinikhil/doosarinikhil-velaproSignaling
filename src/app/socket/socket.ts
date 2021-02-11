@@ -1,5 +1,5 @@
 import * as socket from "socket.io";
-import { getSession, startSession, deleteSession } from "../helpers/utilities";
+import { getSession, startSession, deleteSession, sendNotification } from "../helpers/utilities";
 import { RabbitmqConnection } from "../services/rabbitmq"
 
 var socketUsers: { [key: string]: any } = {};
@@ -76,7 +76,11 @@ function listen(server: any) {
             console.log("call req ", data);
             switch (data.type) {
                 case "Request":
-                    sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
+                    if(socketUsers[data.to.id]){
+                        sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
+                    }else{
+                        sendNotification(data.to.id)
+                    }
                     break;
                 case "Accept":
                     if (getSocketId(data.from.id)) {

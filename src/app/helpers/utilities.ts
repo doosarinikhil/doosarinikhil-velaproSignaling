@@ -33,7 +33,18 @@ function updateSession(roomId: string, key: string, value: any) {
     }
     return (getSession(roomId));
 }
+function sendNotification(id: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        post('https://velapro.com:3001/api/v1/webrtcActiveUsers/sendPushToReceiver', { json: { toUserId: id } }, (err, response, body) => {
+            if (err) {
+                console.error("Error ---->", err.message);
+            } else {
+                resolve(body);
+            }
+        });
+    })
 
+}
 function setParticipant(roomId: string, participant: any) {
     getSession(roomId).participants[participant.id] = participant;
     getSession(roomId).logs.participants[participant.id] = participant;
@@ -44,4 +55,4 @@ function joinParticipant(roomId: string, id: string, socketId: string) {
     let data = { id, socketId }
     getSession(roomId).joinedParticipants.push(data);
 }
-export { isRoomInSession, getSession, startSession, deleteSession }
+export { isRoomInSession, getSession, startSession, deleteSession, sendNotification }
