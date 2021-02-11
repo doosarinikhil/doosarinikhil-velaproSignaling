@@ -80,6 +80,9 @@ function listen(server: any) {
                         sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                     }else{
                         sendNotification(data.to.id)
+                        setTimeout(()=>{
+                            sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
+                        },10*1000)
                     }
                     break;
                 case "Accept":
