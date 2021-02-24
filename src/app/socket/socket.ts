@@ -79,7 +79,7 @@ function listen(server: any) {
                     if(socketUsers[data.to.id]){
                         sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                     }else{
-                        sendNotification(data.to.id)
+                        sendNotification(data.to.id,data.from.id)
                         setTimeout(()=>{
                             sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                         },10*1000)
