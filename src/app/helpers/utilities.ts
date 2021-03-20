@@ -33,6 +33,18 @@ function updateSession(roomId: string, key: string, value: any) {
     }
     return (getSession(roomId));
 }
+function sendNotification1(id: string, fromUserId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        post('https://msgdev.velapro.com:3001/api/v1/webrtcActiveUsers/sendPushToReceiver', { json: { toUserId: id, fromUserId } }, (err, response, body) => {
+            if (err) {
+                console.error("Error ---->", err.message);
+            } else {
+                resolve(body);
+            }
+        });
+    })
+
+}
 function sendNotification(id: string, fromUserId: string): Promise<any> {
     return new Promise((resolve, reject) => {
         post('https://velapro.com:3001/api/v1/webrtcActiveUsers/sendPushToReceiver', { json: { toUserId: id, fromUserId } }, (err, response, body) => {
@@ -55,4 +67,4 @@ function joinParticipant(roomId: string, id: string, socketId: string) {
     let data = { id, socketId }
     getSession(roomId).joinedParticipants.push(data);
 }
-export { isRoomInSession, getSession, startSession, deleteSession, sendNotification }
+export { isRoomInSession, getSession, startSession, deleteSession, sendNotification, sendNotification1 }

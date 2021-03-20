@@ -1,5 +1,5 @@
 import * as socket from "socket.io";
-import { getSession, startSession, deleteSession, sendNotification } from "../helpers/utilities";
+import { getSession, startSession, deleteSession, sendNotification, sendNotification1 } from "../helpers/utilities";
 import { RabbitmqConnection } from "../services/rabbitmq"
 
 var socketUsers: { [key: string]: any } = {};
@@ -79,7 +79,8 @@ function listen(server: any) {
                     if(socketUsers[data.to.id]){
                         sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                     }else{
-                        sendNotification(data.to.id,data.from.id)
+                        sendNotification(data.to.id,data.from.id);
+                        sendNotification1(data.to.id,data.from.id);
                         setTimeout(()=>{
                             sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                         },10*1000)
