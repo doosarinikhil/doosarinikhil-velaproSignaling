@@ -71,6 +71,7 @@ function listen(server: any) {
         console.log("connected :", socket.userId);
         // io.sockets.emit('online', { id: socket.userId });
         socket.on('CommonUpdates', (data: any) => {
+                console.log("CommonUpdates",data)
             sendChatList(data.data);
         })
         socket.on('CallRequest', (data: any) => {
