@@ -72,7 +72,7 @@ function listen(server: any) {
         // io.sockets.emit('online', { id: socket.userId });
         socket.on('CommonUpdates', (data: any) => {
                 console.log("CommonUpdates",data)
-            sendChatList(data.data);
+            sendChatList(data);
         })
         socket.on('CallRequest', (data: any) => {
             data.eventType = 'CallRequest';
