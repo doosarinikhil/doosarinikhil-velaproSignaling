@@ -51,6 +51,8 @@ function sendChatList(payloadData: any): Promise<any> {
             if (err) {
                 console.error("Error ---->", err.message);
             } else {
+                console.log(response)
+                console.log("api ",body)
                 resolve(body);
             }
         });
