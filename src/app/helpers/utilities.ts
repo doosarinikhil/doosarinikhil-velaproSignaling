@@ -58,6 +58,19 @@ function sendChatList(payloadData: any): Promise<any> {
     })
 
 }
+function sendChatListDev(payloadData: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+        post('https://msgdev.velapro.com:3001/api/v1/common/commonUpdates', { json: payloadData}, (err, response, body) => {
+            if (err) {
+                console.error("Error ---->", err.message);
+            } else {
+                console.log(body);
+                resolve(body);
+            }
+        });
+    })
+
+}
 function sendNotification(id: string, fromUserId: string,payloadData: any): Promise<any> {
     return new Promise((resolve, reject) => {
         post('https://velapro.com:3001/api/v1/webrtcActiveUsers/sendPushToReceiver', { json: { toUserId: id, fromUserId, payloadData } }, (err, response, body) => {
@@ -80,4 +93,4 @@ function joinParticipant(roomId: string, id: string, socketId: string) {
     let data = { id, socketId }
     getSession(roomId).joinedParticipants.push(data);
 }
-export { isRoomInSession, getSession, startSession, deleteSession, sendNotification, sendNotification1, sendChatList }
+export { isRoomInSession, getSession, startSession, deleteSession, sendNotification, sendNotification1, sendChatList, sendChatListDev }

@@ -1,5 +1,5 @@
 import * as socket from "socket.io";
-import { getSession, startSession, deleteSession, sendNotification, sendNotification1, sendChatList } from "../helpers/utilities";
+import { getSession, startSession, deleteSession, sendNotification, sendNotification1, sendChatList, sendChatListDev } from "../helpers/utilities";
 import { RabbitmqConnection } from "../services/rabbitmq"
 
 var socketUsers: { [key: string]: any } = {};
@@ -71,8 +71,10 @@ function listen(server: any) {
         console.log("connected :", socket.userId);
         // io.sockets.emit('online', { id: socket.userId });
         socket.on('CommonUpdates', (data: any) => {
-                console.log("CommonUpdates",data)
             sendChatList(data);
+        })
+        socket.on('CommonUpdatesDev', (data: any) => {
+            sendChatListDev(data);
         })
         socket.on('CallRequest', (data: any) => {
             data.eventType = 'CallRequest';
