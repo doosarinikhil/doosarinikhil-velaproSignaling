@@ -94,6 +94,7 @@ function constructAlertData(payload: any,type: string){
             };
         break;
     } 
+    console.log(" constructAlertData - > ",data)
     return data; 
 }
 function sendAlerts(data: any){
