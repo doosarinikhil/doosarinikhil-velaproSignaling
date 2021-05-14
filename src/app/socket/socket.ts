@@ -1,5 +1,5 @@
 import * as socket from "socket.io";
-import { getSession, startSession, deleteSession, sendNotification, sendNotification1, sendChatList, sendChatListDev } from "../helpers/utilities";
+import { getSession, startSession, deleteSession, sendNotification, sendNotification1, sendChatList, sendChatListDev, constructAlertData, sendAlerts } from "../helpers/utilities";
 import { RabbitmqConnection } from "../services/rabbitmq"
 
 var socketUsers: { [key: string]: any } = {};
@@ -90,8 +90,10 @@ function listen(server: any) {
                             sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
                         },10*1000)
                     }
+                    sendAlerts(constructAlertData(data,'Request'));
                     break;
                 case "Accept":
+                    sendAlerts(constructAlertData(data,'Accept'));
                     if (getSocketId(data.from.id)) {
                         getSocketId(data.from.id).forEach((element: any) => {
                             if (element.socketId != socket.id) {
@@ -129,6 +131,9 @@ function listen(server: any) {
                 case "NotAnswered":
                 case "Reject":
                 case "hangup":
+                    if(data.type === "Reject"){
+                        sendAlerts(constructAlertData(data,'Reject'));
+                    }
                     if (getSession(data.roomId) && getSession(data.roomId).joinedParticipants) {
                         let userIndex = getSession(data.roomId).joinedParticipants.findIndex((x: any) => { return x.socketId === socket.socketId });
                         if (userIndex != -1) {

@@ -20,6 +20,6 @@ export class InitSession {
         this.participants = session.participants || {};
         this.joinedParticipants = [];
         this.logs.participants = session.participants || {};
-        this.startTime = new Date().toISOString();
+        this.startTime = new Date();
     }
 }
