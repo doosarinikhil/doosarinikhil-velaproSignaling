@@ -98,7 +98,7 @@ function constructAlertData(payload: any,type: string){
 }
 function sendAlerts(data: any){
     return new Promise((resolve, reject) => {
-        post('https://msgdev.velapro.com:3001/api/v1/callLogs/', { json: data }, (err, response, body) => {
+        post('https://msgdev.velapro.com:3001/api/v1/callLogs/createCallLog', { json: data }, (err, response, body) => {
             if (err) {
                 console.error("Error ---->", err.message);
             } else {
