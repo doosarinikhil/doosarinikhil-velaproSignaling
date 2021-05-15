@@ -23,7 +23,9 @@ function setSession(id: string, session: any) {
 }
 function deleteSession(roomId: string) {
     if(sessionMap.get()[roomId]){
-        sendAlerts(constructAlertData(sessionMap.get()[roomId],'End'))
+        let data = sessionMap.get()[roomId];
+        data.roomId = roomId;
+        sendAlerts(constructAlertData(data,'End'))
         delete sessionMap.get()[roomId];
     }
 }
