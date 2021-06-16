@@ -69,7 +69,7 @@ function listen(server: any) {
             socketUsers[socket.userId].push({ socketId: socket.id });
         }
         console.log("connected :", socket.userId);
-        // io.sockets.emit('online', { id: socket.userId });
+        io.sockets.emit('online', { id: socket.userId });
         socket.on('CommonUpdates', (data: any) => {
             sendChatList(data);
         })
