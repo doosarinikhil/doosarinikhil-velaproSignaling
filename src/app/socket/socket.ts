@@ -69,9 +69,11 @@ function listen(server: any) {
             socketUsers[socket.userId].push({ socketId: socket.id });
         }
         console.log("connected :", socket.userId);
-        io.sockets.emit('online', { id: socket.userId });
         socket.on('CommonUpdates', (data: any) => {
             sendChatList(data);
+        })
+        socket.on('CallFromAndroid', (data: any) => {
+            io.sockets.emit('CallFromAndroid', data);
         })
         socket.on('CommonUpdatesDev', (data: any) => {
             sendChatListDev(data);
@@ -86,9 +88,9 @@ function listen(server: any) {
                     }else{
                         sendNotification(data.to.id,data.from.id,data);
                         sendNotification1(data.to.id,data.from.id,data);
-                        setTimeout(()=>{
-                            sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
-                        },10*1000)
+                        // setTimeout(()=>{
+                        //     sendMessageTOSocketUsers(data.to.id, 'CallRequest', data)
+                        // },10*1000)
                     }
                     sendAlerts(constructAlertData(data,'Request'));
                     break;
@@ -172,13 +174,13 @@ function listen(server: any) {
                 default:
                     broadcastToRoom(data.roomId, data.from.id, 'CallRequest', data);
             }
-        })
+        });
         socket.on('init', (data: any) => {
             socket.call = { roomId: data.roomId }
             startSession(data.roomId, data.participants)
             getSession(data.roomId).joinedParticipants.push({ id: data.from.id, socketId: socket.id }) 
             console.log("init ",getSession(data.roomId)); 
-        })
+        });
         socket.on('addParticipants', (data: any) => {
             data.eventType = 'addParticipants';
             if (getSession(data.roomId)) {
@@ -190,7 +192,7 @@ function listen(server: any) {
                     })
                 }
             }
-        })
+        });
         // Peer to peer calling events 
         socket.on('P2P', (data: any) => {
             data.eventType = 'P2P';
