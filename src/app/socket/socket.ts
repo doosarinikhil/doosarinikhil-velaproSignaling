@@ -62,12 +62,13 @@ function listen(server: any) {
     });
     io.on('connection', (socket: any) => {
         socket.userId = socket.handshake.query.accessToken;
-        if (socketUsers[socket.userId]) {
-            socketUsers[socket.userId].push({ socketId: socket.id })
-        } else {
-            socketUsers[socket.userId] = [];
-            socketUsers[socket.userId].push({ socketId: socket.id });
-        }
+        // if (socketUsers[socket.userId]) {
+        //     socketUsers[socket.userId].push({ socketId: socket.id })
+        // } else {
+        //     socketUsers[socket.userId] = [];
+        //     socketUsers[socket.userId].push({ socketId: socket.id });
+        // }
+        socketUsers[socket.userId] = [{ socketId: socket.id }]
         console.log("connected :", socket.userId);
         socket.on('CommonUpdates', (data: any) => {
             sendChatList(data);
