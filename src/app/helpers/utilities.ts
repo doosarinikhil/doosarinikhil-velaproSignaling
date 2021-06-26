@@ -105,7 +105,7 @@ function sendAlerts(data: any) {
             if (err) {
                 console.error("Error ---->", err.message);
             } else {
-                post('https://msgdev.velapro.com:3001/api/v1/callLogs/createCallLog', { json: data }, (err, response, body) => {
+                post('https://velapro.com:3001/api/v1/callLogs/createCallLog', { json: data }, (err, response, body) => {
                     if (err) {
                         console.error("Error ---->", err.message);
                     }
