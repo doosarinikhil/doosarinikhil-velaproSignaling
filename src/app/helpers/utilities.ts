@@ -99,12 +99,17 @@ function constructAlertData(payload: any,type: string){
     console.log(" constructAlertData - > ",data)
     return data; 
 }
-function sendAlerts(data: any){
+function sendAlerts(data: any) {
     return new Promise((resolve, reject) => {
         post('https://msgdev.velapro.com:3001/api/v1/callLogs/createCallLog', { json: data }, (err, response, body) => {
             if (err) {
                 console.error("Error ---->", err.message);
             } else {
+                post('https://msgdev.velapro.com:3001/api/v1/callLogs/createCallLog', { json: data }, (err, response, body) => {
+                    if (err) {
+                        console.error("Error ---->", err.message);
+                    }
+                });
                 resolve(body);
             }
         });
