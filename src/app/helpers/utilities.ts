@@ -61,7 +61,7 @@ function constructAlertData(payload: any,type: string){
                 "isMute": false,
                 "isRecorded": false,
                 "callRecordedFile":null,
-                "callType": payload.callType,
+                "callType": payload.participants[0].callType,
                 "isConference": false,
                 "callOwner": payload.from.id,
                 "callTimestamp": seconds_since_epoch(new Date()),
