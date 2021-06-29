@@ -223,13 +223,14 @@ function listen(server: any) {
             }
             // io.sockets.emit('offline', { id: socket.userId });
             console.log("disconnect" + socket.userId + " data: ", data);
-            let index = socketUsers[socket.userId].findIndex((x: any) => { return x.socketId === socket.id });
-            if (index != -1) {
-                socketUsers[socket.userId].splice(index, 1);
-            }
-            if (socketUsers[socket.userId].length == 0) {
-                delete socketUsers[socket.userId];
-            }
+            // let index = socketUsers[socket.userId].findIndex((x: any) => { return x.socketId === socket.id });
+            // if (index != -1) {
+            //     socketUsers[socket.userId].splice(index, 1);
+            // }
+            // if (socketUsers[socket.userId].length == 0) {
+            //     delete socketUsers[socket.userId];
+            // }
+            delete socketUsers[socket.userId];
             if (socket.call) {
                 if (getSession(socket.call.roomId) && getSession(socket.call.roomId).joinedParticipants) {
                     let userIndex = getSession(socket.call.roomId).joinedParticipants.findIndex((x: any) => { return x.socketId === socket.id });
